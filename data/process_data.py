@@ -71,7 +71,7 @@ def save_data(df, database_filename):
            database having Messages table
        DESCRIPTION:
            Insert dataframe into sql table<DisasterMessages> in database file to be used as input.
-           This checks if the table exist, it it does, it is dropped and recreated. Data is inserted in batches
+           This checks if the table exist, if it does, it is dropped and recreated. Data is inserted in batches
            based on the chunksize.
     '''
     table = 'DisasterMessages'

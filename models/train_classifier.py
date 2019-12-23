@@ -1,19 +1,25 @@
+
 import sys
 import nltk
-
-import sqlalchemy as create_engine
+import numpy as np
+nltk.download(['punkt', 'wordnet', 'stopwords'])
+import sqlalchemy as sqla
 import pandas as pd
 import re
 from nltk.tokenize import word_tokenize
+from nltk.stem.porter import PorterStemmer
 from nltk.corpus import stopwords
 from nltk.stem.wordnet import WordNetLemmatizer
 from sklearn.pipeline import Pipeline
-from sklearn.feature_extraction.text import  CountVectorizer, TfidfTransformer
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer, TfidfTransformer
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.multiclass import OneVsRestClassifier
 from sklearn.multioutput import MultiOutputClassifier
+from sklearn.svm import LinearSVC
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report, accuracy_score
 from sklearn.model_selection import GridSearchCV
+from sklearn.ensemble import AdaBoostClassifier
 import pickle
 
 nltk.download(['punkt', 'wordnet', 'stopwords'])
@@ -32,19 +38,18 @@ def load_data(database_filepath):
                  training and testing model.
     '''
     # connect to the database
-    conn = create_engine('sqlite:///{}'.format(database_filepath))
+    conn = sqla.create_engine('sqlite:///{}'.format(database_filepath))
     # run a query and assign value to a dataframe
     df = pd.read_sql('SELECT * FROM DisasterMessages', conn)
 
     # prepare modeling data
-    X = df['message']
+    X, Y = df['message'], df.iloc[:, 4:]
 
-    # for the category values columns
-    Y = df.iloc[:, 4:]
+    # mapping extra values to `1`
+    Y['related'] = Y['related'].map(lambda x: 1 if x == 2 else x)
 
-    # identify the category columns
-
-    category_columns = Y.coulumns.values
+    # reassign the new columns to dataframe
+    category_columns = Y.columns.values
 
     return X, Y, category_columns
 
@@ -59,18 +64,16 @@ def tokenize(text):
     text = re.sub(r"[^a-zA-Z0-9]", " ", text.lower())
 
     # tokenize text
-    word_list = word_tokenize(text)
+    words = word_tokenize(text)
 
     # remove stop words
-    tokens = [w for w in word_list if w not in stopwords.words("english")]
+    stopwords_ = stopwords.words("english")
+    words = [word for word in words if word not in stopwords_]
 
-    lemmatizer = WordNetLemmatizer()
+    # extract root form of words
+    words = [WordNetLemmatizer().lemmatize(word, pos='v') for word in words]
 
-    clean_tokens = []
-    for tok in tokens:
-        clean_tok = lemmatizer.lemmatize(tok).lower().strip()
-        clean_tokens.append(clean_tok)
-    return clean_tokens
+    return words
 
 
 def build_model():
@@ -81,21 +84,22 @@ def build_model():
     '''
 
     # create ML pipeline
+
     pipeline = Pipeline([('vect', CountVectorizer(tokenizer=tokenize)),
                          ('tfidf', TfidfTransformer()),
-                         ('clf', MultiOutputClassifier(RandomForestClassifier()))])
+                         ('clf', MultiOutputClassifier(
+                             OneVsRestClassifier(LinearSVC())))])
 
-    # specify parameters for grid search
-    parameters = {
-        'features__text_pipeline__vect__ngram_range': ((1, 1), (1, 2)),
-        'features__text_pipeline__vect__max_df': (0.5, 0.75, 1.0),
-        'features__text_pipeline__vect__max_features': (None, 5000, 10000),
-        'features__text_pipeline__tfidf__use_idf': (True, False),
-        'clf__n_estimators': [50, 100, 200],
-        'clf__min_samples_split': [5, 7, 9]
-    }
+    # hyper-parameter grid
+    parameters = {'vect__ngram_range': ((1, 1), (1, 2)),
+                  'vect__max_df': (0.75, 1.0)
+                  }
 
-    model = GridSearchCV(pipeline, param_grid=parameters)
+    # create model
+    model = GridSearchCV(estimator=pipeline,
+                         param_grid=parameters,
+                         verbose=3,
+                         cv=3)
 
     return model
 
@@ -108,14 +112,14 @@ def evaluate_model(model, X_test, Y_test, category_names):
         return: dict - the classification report of category names
     '''
 
-    y_pred = model.predict(X_test)  # prediction
-    prediction = pd.DataFrame(y_pred.reshape(-1, 36), columns=category_names)  # transform list to dataframe
-    report = dict()
-    for i in category_names:
-        # iterate the category names and add its classification scores to dictionary
-        classification = classification_report(Y_test[i], prediction[i])
-        report[i] = classification
-    return report
+    y_preds = model.predict(X_test)
+
+    # print classification report
+    print(classification_report(Y_test.values, y_preds, target_names=category_names))
+
+    # print accuracy score
+    print('Accuracy: {}'.format(np.mean(Y_test.values == y_preds)))
+
 
 
 def save_model(model, model_filepath):
