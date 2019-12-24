@@ -105,7 +105,7 @@ def index():
               'title': "Count"
               },
               'xaxis': {
-              'title': "Genre"
+              'title': "Categories"
               }
             }
         }

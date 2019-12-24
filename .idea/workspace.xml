@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="65977fa5-b6d4-4a7d-9194-d75b2724c126" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.ipynb_checkpoints/DisasterRespone_Model_notebook-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/DisasterRespone_Model_notebook-checkpoint.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.ipynb_checkpoints/DisasterResponse_NoteBook-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/DisasterResponse_NoteBook-checkpoint.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DisasterRespone_Model_notebook.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/DisasterRespone_Model_notebook.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DisasterResponse.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DisasterResponse_NoteBook.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/DisasterResponse_NoteBook.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/process_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/process_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/train_classifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/train_classifier.py" afterDir="false" />
-    </list>
+    <list default="true" id="65977fa5-b6d4-4a7d-9194-d75b2724c126" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -105,9 +96,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="161" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1577095518866" />
-    <state x="655" y="342" key="com.intellij.ide.util.TipDialog" timestamp="1577088772531">
+    <state x="655" y="342" key="com.intellij.ide.util.TipDialog" timestamp="1577197584023">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="655" y="342" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/1920.0.1366.728@0.0.1920.1040" timestamp="1577088772531" />
+    <state x="655" y="342" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/1920.0.1366.728@0.0.1920.1040" timestamp="1577197584023" />
   </component>
 </project>
