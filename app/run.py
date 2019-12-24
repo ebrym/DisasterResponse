@@ -1,6 +1,7 @@
 import json
 import plotly
 import pandas as pd
+import numpy as np
 
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
@@ -26,11 +27,11 @@ def tokenize(text):
     return clean_tokens
 
 # load data
-engine = create_engine('sqlite:///../data/DisasterResponse.db')
+engine = create_engine('sqlite:///./data/DisasterResponse.db')
 df = pd.read_sql_table('DisasterMessages', engine)
 
 # load model
-model = joblib.load("../models/classifier.pkl")
+model = joblib.load("./models/classifier.pkl")
 
 
 # index webpage displays cool visuals and receives user input text for model
@@ -42,6 +43,15 @@ def index():
     # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
+
+
+    category = list(df)[4:]
+    category_counts = [np.sum(df[column]) for column in category]
+    
+    categories = df.iloc[:,4:]
+    categories_mean = categories.mean().sort_values(ascending=False)[1:6]
+    categories_names = list(categories_mean.index)
+
     
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
@@ -62,6 +72,41 @@ def index():
                 'xaxis': {
                     'title': "Genre"
                 }
+            }
+        },
+        {
+              'data': [
+                       Bar(
+                           x=category,
+                           y=category_counts
+                           )
+                       ],
+              
+              'layout': {
+              'title': 'Distribution of message categories',
+              'yaxis': {
+              'title': "Proportion"
+              },
+              'xaxis': {
+              'title': "Category"
+              }
+              }
+        },
+        {
+              'data': [
+                       Bar(
+                           x=categories_names,
+                           y=categories_mean
+                           )
+                       ],
+              'layout': {
+              'title': 'Top 5 categories',
+              'yaxis': {
+              'title': "Count"
+              },
+              'xaxis': {
+              'title': "Genre"
+              }
             }
         }
     ]
