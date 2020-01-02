@@ -2,10 +2,8 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Highdmin - Responsive Bootstrap 4 Admin Dashboard</title>
+        <title>Disaster Response Message Classification</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-        <meta content="Coderthemes" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
         <!-- App favicon -->
@@ -31,7 +29,7 @@
                     <!-- Logo container-->
                     <div class="logo">
                         <!-- Text Logo -->
-                        <a href="index.html" class="logo">
+                        <a href="/" class="logo">
                             <span class="logo-small"><i class="mdi mdi-radar"></i></span>
                             <span class="logo-large"><i class="mdi mdi-radar"></i> Disaster Response Classification</span>
                         </a> 
@@ -112,13 +110,8 @@
                                         <button type="submit" class="btn btn-lg btn-success">Classify Message</button>
                                     </div>
                                 </form>
-                            
-                               
-
                                 {% block message %}
-                                {% endblock %}
-
-                               
+                                {% endblock %}                               
                             <!-- end row -->
                         </div>
                     </div>
@@ -134,10 +127,7 @@
                     {% for id in ids %}
                         <div class="col-xl-6">
                             <div class="card-box">                            
-                                <div id="{{id}}" class="flot-chart mt-5"></div>                              
-                                
-                            <!--<div id="website-stats" style="height: 350px;" class="flot-chart mt-5"></div>-->
-                                        
+                                <div id="{{id}}" class="flot-chart mt-5"></div>                                                                      
                             </div>
                         </div>
                     {% endfor %}
@@ -154,10 +144,6 @@
                         </div>
                     </div> -->
                 </div>
-                <!-- end row -->
-
-
-               
                 <!-- end row -->
 
             </div> <!-- end container -->
@@ -185,24 +171,6 @@
         <script src="{{ url_for('static', filename='assets/js/jquery.slimscroll.js') }}"></script>
        
 
-        <!-- Flot chart 
-        <script src="../plugins/flot-chart/jquery.flot.min.js"></script>
-        <script src="../plugins/flot-chart/jquery.flot.time.js"></script>
-        <script src="../plugins/flot-chart/jquery.flot.tooltip.min.js"></script>
-        <script src="../plugins/flot-chart/jquery.flot.resize.js"></script>
-        <script src="../plugins/flot-chart/jquery.flot.pie.js"></script>
-        <script src="../plugins/flot-chart/jquery.flot.crosshair.js"></script>
-        <script src="../plugins/flot-chart/curvedLines.js"></script>
-        <script src="../plugins/flot-chart/jquery.flot.axislabels.js"></script>-->
-
-        <!-- KNOB JS -->
-        <!--[if IE]>
-        <script type="text/javascript" src="../plugins/jquery-knob/excanvas.js"></script>
-        <![endif]
-        <script src="../plugins/jquery-knob/jquery.knob.js"></script>-->
-
-        <!-- Dashboard Init 
-        <script src="assets/pages/jquery.dashboard.init.js"></script>-->
 
         <!-- App js -->
         <script src="{{ url_for('static', filename='assets/js/jquery.core.js') }}"></script>
