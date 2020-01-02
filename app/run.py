@@ -2,29 +2,43 @@ import json
 import plotly
 import pandas as pd
 import numpy as np
-
+from collections import Counter
+from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 
+import re
+
+import operator
 from flask import Flask
 from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
 from sklearn.externals import joblib
 from sqlalchemy import create_engine
 
+from pprint import pprint
 
 app = Flask(__name__)
 
 def tokenize(text):
-    tokens = word_tokenize(text)
-    lemmatizer = WordNetLemmatizer()
 
-    clean_tokens = []
-    for tok in tokens:
-        clean_tok = lemmatizer.lemmatize(tok).lower().strip()
-        clean_tokens.append(clean_tok)
+     # Normalize text
+    filter_text = re.sub(r"[^a-zA-Z0-9]", " ", text.lower())
 
-    return clean_tokens
+    # tokenize text
+    words = word_tokenize(filter_text)
+    
+    # remove stop words
+    stopwords_ = stopwords.words("english")
+    words = [word for word in words if word not in stopwords_]
+    
+    # extract root form of words
+    words = [WordNetLemmatizer().lemmatize(word, pos='v') for word in words]
+
+    return words
+
+
+
 
 # load data
 engine = create_engine('sqlite:///./data/DisasterResponse.db')
@@ -44,7 +58,7 @@ def index():
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
 
-
+    # category extractions
     category = list(df)[4:]
     category_counts = [np.sum(df[column]) for column in category]
     
@@ -53,6 +67,38 @@ def index():
     categories_names = list(categories_mean.index)
 
     
+
+
+    # message representation by category
+    '''
+    Try to get most words used in messages
+    '''
+    words_occurrences=[]                              
+    
+    for text in df['message'].values:
+        tokenized_ = tokenize(text)
+        words_occurrences.extend(tokenized_)
+
+    word_dictionary = Counter(words_occurrences)     
+    
+    
+    sorted_word_dictionary = dict(sorted(word_dictionary.items(),
+                                         key=operator.itemgetter(1),
+                                         reverse=True))   
+                                         
+    top_word_count, top_10_words =0, {}
+
+    for k,v in sorted_word_dictionary.items():
+        top_10_words[k]=v
+        top_word_count+=1
+        if top_word_count==10:
+            break
+    words=list(top_10_words.keys())
+    #pprint(words)
+    count_props=100*np.array(list(top_10_words.values()))/df.shape[0]
+    #
+
+
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
     graphs = [
@@ -65,7 +111,7 @@ def index():
             ],
 
             'layout': {
-                'title': 'Distribution of Message Genres',
+                'title': 'Message by Genres',
                 'yaxis': {
                     'title': "Count"
                 },
@@ -75,17 +121,36 @@ def index():
             }
         },
         {
-              'data': [
-                       Bar(
-                           x=category,
-                           y=category_counts
-                           )
-                       ],
-              
+            'data': [
+                Bar(
+                    x=words,
+                    y=count_props
+                )
+            ],
+
+            'layout': {
+                'title': 'Top 10 words representation(%)',
+                'yaxis': {
+                    'title': '% Occurrence',
+                    'automargin': True
+                },
+                'xaxis': {
+                    'title': 'Words',
+                    'automargin': True
+                }
+            }
+        },
+        {
+            'data': [
+                    Bar(
+                        x=category,
+                        y=category_counts
+                        )
+                    ],
               'layout': {
-              'title': 'Distribution of message categories',
+              'title': 'Message by categories',
               'yaxis': {
-              'title': "Proportion"
+              'title': "Count"
               },
               'xaxis': {
               'title': "Category"

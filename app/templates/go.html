@@ -8,17 +8,35 @@
 {% endblock %}
 
 {% block content %}
-    <h1 class="text-center">Result</h1>
-        <ul class="list-group">
-            {% for category, classification in classification_result.items() %}
-                {% if classification == 1 %}
-                    <li class="list-group-item list-group-item-success text-center">{{category.replace('_', ' ').title()}}</li>
-                {% else %}
-                    <li class="list-group-item list-group-item-dark text-center">{{category.replace('_', ' ').title()}}</li>
-                {% endif %}
-            {% endfor %}
+<div class="col-xl-12">
+    <div class="card-box">                            
+        <h4 class="header-title">Results</h4>
+        <div class="text-center mt-4 mb-4">
+            <p class="text-center"><i>Classification are shown in green tiles.</i></p>
+            <div class="row">
+                    {% for category, classification in classification_result.items() %}
+                        {% if classification == 1 %}
+                            <div class="col-md-6 col-xl-3">
+                                <div class="card-box widget-flat border-success bg-success text-white">
+                                    <i class="fi-check"></i>
+                                    <h3 class="text-uppercase m-b-10">{{category.replace('_', ' ').title()}}</h3>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="col-md-6 col-xl-3">
+                                <div class="card-box bg-danger widget-flat border-danger text-white">
+                                    <i class="fi-delete"></i>
+                                    <h3 class="text-uppercase m-b-10">{{category.replace('_', ' ').title()}}</h3>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
 
+             
+            </div>
         </div>
+           
     </div>
+</div>
 
 {% endblock %}
