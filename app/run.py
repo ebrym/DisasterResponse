@@ -16,7 +16,6 @@ from plotly.graph_objs import Bar
 from sklearn.externals import joblib
 from sqlalchemy import create_engine
 
-from pprint import pprint
 
 app = Flask(__name__)
 
@@ -81,7 +80,6 @@ def index():
 
     word_dictionary = Counter(words_occurrences)     
     
-    
     sorted_word_dictionary = dict(sorted(word_dictionary.items(),
                                          key=operator.itemgetter(1),
                                          reverse=True))   
@@ -94,7 +92,7 @@ def index():
         if top_word_count==10:
             break
     words=list(top_10_words.keys())
-    #pprint(words)
+  
     count_props=100*np.array(list(top_10_words.values()))/df.shape[0]
     #
 
