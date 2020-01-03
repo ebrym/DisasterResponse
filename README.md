@@ -25,14 +25,22 @@
 <a id='overview'></a>
 
 ## 1. Project Overview
+This uses two datasets from from <a href="https://www.figure-eight.com/" target="_blank"> Figure Eight</a> for processing and classification of distress mesages from three different channels. Processing is done via NLP and Machine learning pipelines. Also a web application is build with the optimized classifier to classify messages to the response category the message is belongs in order to increase response time of the responding organizations.
 
-In this project, I'll apply data engineering to analyze disaster data from <a href="https://www.figure-eight.com/" target="_blank">Figure Eight</a> to build a model for an API that classifies disaster messages.
-
-_data_ directory contains a data set which are real messages that were sent during disaster events. I will be creating a machine learning pipeline to categorize these events so that appropriate disaster relief agency can be reached out for help.
-
-This project will include a web app where an emergency worker can input a new message and get classification results in several categories. The web app will also display visualizations of the data.
+The web app included is to enable an emergency worker input a message and get classification results in several categories. The web app will also display visualizations of the data as stored in sqlite database.
 
 [Here](#eg) are a few screenshots of the web app.
+
+**_Screenshot 1_**
+
+![master](screenshots/home.JPG)
+
+What the app will do is that it will classify the text message into categories so that appropriate relief agency can be reached out for help.
+
+**_Screenshot 2_**
+
+![results](screenshots/classification.JPG)
+
 
 <a id='components'></a>
 
@@ -44,9 +52,9 @@ There are three components of this project:
 
 ### 2.1. ETL Pipeline
 
-File _data/process_data.py_ contains data cleaning pipeline that:
+File _data/process_data.py_ contains data cleaning operations that:
 
-- Loads the `messages` and `categories` dataset
+- Loads the `messages` and `categories` dataset from the csv file.
 - Merges the two datasets
 - Cleans the data
 - Stores it in a **SQLite database**
@@ -55,7 +63,7 @@ File _data/process_data.py_ contains data cleaning pipeline that:
 
 ### 2.2. ML Pipeline
 
-File _models/train_classifier.py_ contains machine learning pipeline that:
+File _models/train_classifier.py_ contains machine learning process that:
 
 - Loads data from the **SQLite database**
 - Splits the data into training and testing sets
@@ -72,17 +80,62 @@ File _models/train_classifier.py_ contains machine learning pipeline that:
 
 Running [this command](#com) **from app directory** will start the web app where users can enter their query, i.e., a request message sent during a natural disaster, e.g. _"Please, we need tents and water. We are in Silo, Thank you!"_.
 
-**_Screenshot 1_**
-
-![master](/screenshots/home.jpg)
-
-What the app will do is that it will classify the text message into categories so that appropriate relief agency can be reached out for help.
-
-**_Screenshot 2_**
-
-![results](/screenshots/classification.jpg)
 
 <a id='run'></a>
+## 3. Running
+
+There are three steps to get up and runnning with the web app if you want to start from ETL process.
+
+<a id='cleaning'></a>
+
+### 3.1. Data Cleaning
+
+**Go to the project directory** and the run the following command:
+
+```bat
+python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db
+```
+
+This will perform cleaning operations on the data and save the result in sqlite database.
+
+_DisasterResponse.db_ already exists in _data_ folder but the above command will still run and replace the file with same information. 
+
+
+<a id='training'></a>
+
+### 3.2. Training Classifier
+
+After the data cleaning process, run this command **from the project directory**:
+
+```bat
+python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl
+```
+
+This will use cleaned data to train the model, improve the model with grid search and saved the model to a pickle file (_classifer.pkl_).
+
+_classifier.pkl_ already exists but the above command will still run and replace the file will same information.
+
+
+<a id='starting'></a>
+
+### 3.3. Starting the web app
+
+After performing the above processes, you can now run the web app to see the visualizations.
+
+**Go the app directory** and run the following command:
+
+<a id='com'></a>
+
+```bat
+python run.py
+```
+
+This will start the web app and will direct you to a URL where you can enter messages and get classification results for it.
+**NOTE:** Running on your local machine requires you to use http://localhost:3001
+
+**_Screenshot 6_**
+
+![web_app](screenshots/home.JPG)
 
 
 
