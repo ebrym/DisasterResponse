@@ -25,7 +25,7 @@
 <a id='overview'></a>
 
 ## 1. Project Overview
-This uses two datasets from from <a href="https://www.figure-eight.com/" target="_blank"> Figure Eight</a> for processing and classification of distress mesages from three different channels. Processing is done via NLP and Machine learning pipelines. Also a web application is build with the optimized classifier to classify messages to the response category the message is belongs in order to increase response time of the responding organizations.
+This project uses two datasets from from <a href="https://www.figure-eight.com/" target="_blank"> Figure Eight</a> for processing and classification of distress mesages from three different channels. Processing is done via NLP and Machine learning pipelines. Also a web application is build with the optimized classifier to classify messages to the response category the message is belongs in order to increase response time of the responding organizations.
 
 The web app included is to enable an emergency worker input a message and get classification results in several categories. The web app will also display visualizations of the data as stored in sqlite database.
 
@@ -136,6 +136,55 @@ This will start the web app and will direct you to a URL where you can enter mes
 **_Screenshot 6_**
 
 ![web_app](screenshots/home.JPG)
+
+<a id='conclusion'></a>
+
+## 4. Conclusion
+
+Some information about training data set as seen on the main page of the web app.
+
+**_Screenshot 7_**
+
+![data](screenshots/datavisualizations.JPG)
+
+As we can see the data is highly imbalanced. Though the accuracy metric is [high](#acc) (you will see the exact value after the model is trained by grid search, it is ~0.94), it has a poor value for recall (~0.6). So, take appropriate measures when using this model for decision-making process at a larger scale or in a production environment.
+
+<a id='files'></a>
+
+## 5. Files
+
+<pre>
+.
+├── app
+│   ├── run.py------------------------# FLASK FILE THAT RUNS APP
+│   ├── static------------------------# STATIC FILES FOR THE WEB APP
+│   └── templates
+│       ├── go.html-------------------# CLASSIFICATION RESULT PAGE OF WEB APP
+│       └── master.html---------------# MAIN PAGE OF WEB APP
+├── data
+│   ├── DisasterResponse.db-----------# DATABASE TO SAVE CLEANED DATA TO
+│   ├── disaster_categories.csv-------# DATA TO PROCESS
+│   ├── disaster_messages.csv---------# DATA TO PROCESS
+│   └── process_data.py---------------# PERFORMS ETL PROCESS
+├── screenshots-----------------------# IMAGES USES IN README FROM THE WEB APP
+├── models
+│   └── train_classifier.py-----------# PERFORMS CLASSIFICATION TASK
+│   └── classifier.pkl----------------# ML TRAINING RESULT 
+
+</pre>
+
+<a id='sw'></a>
+
+## 6. Software Requirements
+
+This project uses **Python 3.6.6**
+
+<a id='credits'></a>
+
+## 7. Credits and Acknowledgements
+
+Thanks <a href="https://www.udacity.com" target="_blank">Udacity</a> for letting me use their logo as favicon for this web app.
+
 
 
 
