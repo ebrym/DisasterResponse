@@ -136,7 +136,7 @@ This will start the web app and will direct you to a URL where you can enter mes
 
 ## 4. Conclusion
 
-Disasters are naturally occurring enevnt that are usually not planned or are sometimes foreseen/predicted to occur at certain period. When a this happens, it is important to know what kind of emergencies are needed by victims affected by the event. Timely categorization of news reports, texts, and calls can help the relief agencies quickly assess the situation and provide neccessary assistance. This project is tailored to help a user/aid worker to timely make decissions on message received by using the user interface to input the message in other to get the category the message belongs.
+Disasters are naturally occurring enents that are usually not planned or are sometimes foreseen/predicted to occur at certain period. When this happens, it is important to know what kind of emergencies are needed by victims affected by the event. Timely categorization of news reports, texts, and calls can help the relief agencies quickly assess the situation and provide neccessary assistance. This project is tailored to help a user/aid worker to timely make decissions on message received by using the user interface to input the message in other to get the category the message belongs.
 
 **_Screenshot 4_**
 
