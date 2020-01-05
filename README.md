@@ -25,20 +25,19 @@
 <a id='overview'></a>
 
 ## 1. Project Overview
-This project uses two datasets from from <a href="https://www.figure-eight.com/" target="_blank"> Figure Eight</a> for processing and classification of distress mesages from three different channels. Processing is done via NLP and Machine learning pipelines. Also a web application is build with the optimized classifier to classify messages to the response category the message is belongs in order to increase response time of the responding organizations.
+This project uses two datasets from <a href="https://www.figure-eight.com/" target="_blank"> Figure Eight</a> for processing and classification of distress mesages from different channels. Processing is done using NLP and Machine learning techniques. Also a web application is build with the optimized classifier to classify messages to the response category the message.This helps appropriate relief agency to increase response time for providing relief.
 
 The web app included is to enable an emergency worker input a message and get classification results in several categories. The web app will also display visualizations of the data as stored in sqlite database.
 
 [Here](#eg) are a few screenshots of the web app.
 
 **_Screenshot 1_**
-
+MASTER SCREEN
 ![master](screenshots/home.JPG)
 
-What the app will do is that it will classify the text message into categories so that appropriate relief agency can be reached out for help.
 
 **_Screenshot 2_**
-
+CLASSIFICATION SCREEN
 ![results](screenshots/classification.JPG)
 
 
@@ -78,13 +77,13 @@ File _models/train_classifier.py_ contains machine learning process that:
 
 <a id='eg'></a>
 
-Running [this command](#com) **from app directory** will start the web app where users can enter their query, i.e., a request message sent during a natural disaster, e.g. _"Please, we need tents and water. We are in Silo, Thank you!"_.
+Running [this command](#com) **from app directory** will start the web app where users can enter their query, i.e., a request message sent during a natural disaster, e.g. _"Please, we need shelter and food in sambisa forest."_.
 
 
 <a id='run'></a>
 ## 3. Running
 
-There are three steps to get up and runnning with the web app if you want to start from ETL process.
+There are three steps to get the appplication up and runnning with the web app.
 
 <a id='cleaning'></a>
 
@@ -96,9 +95,7 @@ There are three steps to get up and runnning with the web app if you want to sta
 python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db
 ```
 
-This will perform cleaning operations on the data and save the result in sqlite database.
-
-_DisasterResponse.db_ already exists in _data_ folder but the above command will still run and replace the file with same information. 
+This will perform cleaning operations on the data and save the result in sqlite database file.
 
 
 <a id='training'></a>
@@ -111,9 +108,7 @@ After the data cleaning process, run this command **from the project directory**
 python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl
 ```
 
-This will use cleaned data to train the model, improve the model with grid search and saved the model to a pickle file (_classifer.pkl_).
-
-_classifier.pkl_ already exists but the above command will still run and replace the file will same information.
+This will use the cleaned data to train the model, improve the model with grid search and saved the model to a pickle file (_classifer.pkl_).
 
 
 <a id='starting'></a>
@@ -131,9 +126,9 @@ python run.py
 ```
 
 This will start the web app and will direct you to a URL where you can enter messages and get classification results for it.
-**NOTE:** Running on your local machine requires you to use http://localhost:3001
+**NOTE:** Running on your local machine(Windows) requires you to use http://localhost:3001
 
-**_Screenshot 6_**
+**_Screenshot 3_**
 
 ![web_app](screenshots/home.JPG)
 
@@ -143,7 +138,7 @@ This will start the web app and will direct you to a URL where you can enter mes
 
 Some information about training data set as seen on the main page of the web app.
 
-**_Screenshot 7_**
+**_Screenshot 4_**
 
 ![data](screenshots/datavisualizations.JPG)
 
@@ -156,16 +151,16 @@ As we can see the data is highly imbalanced. Though the accuracy metric is [high
 <pre>
 .
 ├── app
-│   ├── run.py------------------------# FLASK FILE THAT RUNS APP
+│   ├── run.py------------------------# FLASK TO RUN THE WEB APP
 │   ├── static------------------------# STATIC FILES FOR THE WEB APP
 │   └── templates
 │       ├── go.html-------------------# CLASSIFICATION RESULT PAGE OF WEB APP
 │       └── master.html---------------# MAIN PAGE OF WEB APP
 ├── data
-│   ├── DisasterResponse.db-----------# DATABASE TO SAVE CLEANED DATA TO
+│   ├── DisasterResponse.db-----------# DATABASE TO SAVE CLEANED DATA
 │   ├── disaster_categories.csv-------# DATA TO PROCESS
 │   ├── disaster_messages.csv---------# DATA TO PROCESS
-│   └── process_data.py---------------# PERFORMS ETL PROCESS
+│   └── process_data.py---------------# PERFORMS ETL TASK
 ├── screenshots-----------------------# IMAGES USES IN README FROM THE WEB APP
 ├── models
 │   └── train_classifier.py-----------# PERFORMS CLASSIFICATION TASK
@@ -177,26 +172,12 @@ As we can see the data is highly imbalanced. Though the accuracy metric is [high
 
 ## 6. Software Requirements
 
-This project uses **Python 3.6.6**
+This project uses **Python 3.7**
 
 <a id='credits'></a>
 
 ## 7. Credits and Acknowledgements
 
-Thanks <a href="https://www.udacity.com" target="_blank">Udacity</a> for letting me use their logo as favicon for this web app.
+Thanks <a href="https://www.udacity.com" target="_blank">Udacity</a> team and <a href="https://www.figure-eight.com/" target="_blank"> Figure Eight</a> for providing the data for this project.. 
+Template for web app is gotten from <a href="https://coderthemes.com" target="_blank">Coder Themes</a>.
 
-
-
-
-### Instructions:
-1. Run the following commands in the project's root directory to set up your database and model.
-
-    - To run ETL pipeline that cleans data and stores in database
-        `python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db`
-    - To run ML pipeline that trains classifier and saves
-        `python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl`
-
-2. Run the following command in the app's directory to run your web app.
-    `python run.py`
-
-3. Go to http://0.0.0.0:3001/

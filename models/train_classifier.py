@@ -59,7 +59,7 @@ def tokenize(text):
         The function is to process the sentence, token the words and lower it.
         arg: str text
         return:list
-        '''
+    '''
     # normalize case and remove punctuation
     text = re.sub(r"[^a-zA-Z0-9]", " ", text.lower())
 

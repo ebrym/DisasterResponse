@@ -21,7 +21,7 @@ app = Flask(__name__)
 
 def tokenize(text):
 
-     # Normalize text
+    # Normalize text
     filter_text = re.sub(r"[^a-zA-Z0-9]", " ", text.lower())
 
     # tokenize text
@@ -74,10 +74,13 @@ def index():
     '''
     words_occurrences=[]                              
     
+    #Tokenize the message collumn
     for text in df['message'].values:
         tokenized_ = tokenize(text)
         words_occurrences.extend(tokenized_)
 
+    
+    #create a counter to words
     word_dictionary = Counter(words_occurrences)     
     
     sorted_word_dictionary = dict(sorted(word_dictionary.items(),
@@ -86,6 +89,7 @@ def index():
                                          
     top_word_count, top_10_words =0, {}
 
+    #looping through the word dictionary and selecting the top 10 occurrence
     for k,v in sorted_word_dictionary.items():
         top_10_words[k]=v
         top_word_count+=1
