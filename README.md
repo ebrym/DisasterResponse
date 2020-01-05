@@ -25,9 +25,9 @@
 <a id='overview'></a>
 
 ## 1. Project Overview
-This project uses two datasets from <a href="https://www.figure-eight.com/" target="_blank"> Figure Eight</a> for processing and classification of distress mesages from different channels. Processing is done using NLP and Machine learning techniques. Also a web application is build with the optimized classifier to classify messages to the response category the message.This helps appropriate relief agency to increase response time for providing relief.
+This project uses two datasets from <a href="https://www.figure-eight.com/" target="_blank"> Figure Eight</a> for processing and classification of distress mesages from different channels. Processing is done using NLP and Machine learning techniques. Also a web application is build with the optimized classifier to classify messages to the response category of the message. This helps appropriate relief agency to increase response time for providing relief.
 
-The web app included is to enable an emergency worker input a message and get classification results in several categories. The web app will also display visualizations of the data as stored in sqlite database.
+The web app included is to enable an emergency aid worker to input a message and get classification results in several categories. The web app also displays visualizations of the data stored in sqlite database.
 
 [Here](#eg) are a few screenshots of the web app.
 
@@ -68,14 +68,14 @@ File _models/train_classifier.py_ contains machine learning process that:
 - Splits the data into training and testing sets
 - Builds a text processing and machine learning pipeline
 - Trains and tunes a model using GridSearchCV
-- Outputs result on the test set
+- Outputs result of the test set
 - Exports the final model as a pickle file
 
 <a id='flask'></a>
 
 ### 2.3. Flask Web App
-
-Running [this command](#com) **from app directory** will start the web app where users can enter their query, i.e., a request message sent during a natural disaster, e.g. _"Please, we need shelter and food in sambisa forest."_.
+The web app shows visualization of the data stored in **SQLite Database** and also enable user to enter message in other to get quick classification categories of the message.
+Running [this command](#com) **from app directory** will start the web app where users can enter their message, i.e., a request message sent during a natural disaster, e.g. _"Please, we need shelter and food in sambisa forest."_.
 
 
 <a id='run'></a>
@@ -124,7 +124,7 @@ python run.py
 ```
 
 This will start the web app and will direct you to a URL where you can enter messages and get classification results for it.
-**NOTE:** Running on your local machine(Windows) requires you to use http://localhost:3001
+**NOTE:** Running on Windows requires you to use http://localhost:3001
 
 <a id='eg'></a>
 
@@ -136,13 +136,13 @@ This will start the web app and will direct you to a URL where you can enter mes
 
 ## 4. Conclusion
 
-Some information about training data set as seen on the main page of the web app.
+Disasters are naturally occurring enevnt that are usually not planned or are sometimes foreseen/predicted to occur at certain period. When a this happens, it is important to know what kind of emergencies are needed by victims affected by the event. Timely categorization of news reports, texts, and calls can help the relief agencies quickly assess the situation and provide neccessary assistance. This project is tailored to help a user/aid worker to timely make decissions on message received by using the user interface to input the message in other to get the category the message belongs.
 
 **_Screenshot 4_**
 
 ![data](screenshots/datavisualizations.JPG)
 
-As we can see the data is highly imbalanced. Though the accuracy metric is [high](#acc) (you will see the exact value after the model is trained by grid search, it is ~0.94), it has a poor value for recall (~0.6). So, take appropriate measures when using this model for decision-making process at a larger scale or in a production environment.
+The accuracy metric for the ML training is high (this can be seen after the model is trained by grid search, it is ~0.94). 
 
 <a id='files'></a>
 
