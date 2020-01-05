@@ -75,8 +75,6 @@ File _models/train_classifier.py_ contains machine learning process that:
 
 ### 2.3. Flask Web App
 
-<a id='eg'></a>
-
 Running [this command](#com) **from app directory** will start the web app where users can enter their query, i.e., a request message sent during a natural disaster, e.g. _"Please, we need shelter and food in sambisa forest."_.
 
 
@@ -127,6 +125,8 @@ python run.py
 
 This will start the web app and will direct you to a URL where you can enter messages and get classification results for it.
 **NOTE:** Running on your local machine(Windows) requires you to use http://localhost:3001
+
+<a id='eg'></a>
 
 **_Screenshot 3_**
 
